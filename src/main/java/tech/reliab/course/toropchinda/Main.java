@@ -1,4 +1,4 @@
-package org.example;
+package tech.reliab.course.toropchinda;
 
 public class Main {
     public static void main(String[] args) {
