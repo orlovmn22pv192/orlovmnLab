@@ -1,6 +1,7 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 public class Bank {
     Long id;
@@ -18,6 +19,7 @@ public class Bank {
     public Bank(Long id, String name){
         this.id = id;
         this.name = name;
+
     }
 
     public Bank(Long id, String name, int numberOfOffices, int numberOfAtms,
