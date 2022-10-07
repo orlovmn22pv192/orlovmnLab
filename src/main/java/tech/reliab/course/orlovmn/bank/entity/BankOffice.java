@@ -34,6 +34,20 @@ public class BankOffice {
         this.rent = rent;
     }
 
+    public BankOffice(BankOffice bankOffice) {
+        this.id = bankOffice.getId();
+        this.name = bankOffice.getName();
+        this.address = bankOffice.getAddress();
+        this.isWorking = bankOffice.isWorking();
+        this.isPossiblePlaceAtm = bankOffice.isPossiblePlaceAtm();
+        this.atmNumber = bankOffice.getAtmNumber();
+        this.canApplyLoan = bankOffice.isCanApplyLoan();
+        this.canPaymentOfMoney = bankOffice.isCanPaymentOfMoney();
+        this.canDepositMoney = bankOffice.isCanDepositMoney();
+        this.moneyAmount = bankOffice.getMoneyAmount();
+        this.rent = bankOffice.getRent();
+    }
+
     public Long getId() {
         return id;
     }

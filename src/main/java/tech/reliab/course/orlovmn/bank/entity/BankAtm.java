@@ -33,7 +33,18 @@ public class BankAtm {
         this.maintenance = maintenance;
     }
 
-
+    public BankAtm(BankAtm bankAtm) {
+        this.id = bankAtm.getId();
+        this.name = bankAtm.getName();
+        this.status = bankAtm.getStatus();
+        this.address = bankAtm.getAddress();
+        this.bankOffice = bankAtm.getBankOffice();
+        this.employee = bankAtm.getEmployee();
+        this.canPaymentOfMoney = bankAtm.isCanPaymentOfMoney();
+        this.canDepositMoney = bankAtm.isCanDepositMoney();
+        this.moneyAmount = bankAtm.getMoneyAmount();
+        this.maintenance = bankAtm.getMaintenance();
+    }
 
     public Long getId() {
         return id;

@@ -30,6 +30,18 @@ public class User {
         this.creditRating = creditRating;
     }
 
+    public User(User user) {
+        this.id = user.getId();
+        this.fullName = user.getFullName();
+        this.birthDate = user.getBirthDate();
+        this.job = user.getJob();
+        this.salary = user.getSalary();
+        this.bank = user.getBank();
+        this.creditAccount = user.getCreditAccount();
+        this.paymentAccount = user.getPaymentAccount();
+        this.creditRating = user.getCreditRating();
+    }
+
     public Long getId() {
         return id;
     }

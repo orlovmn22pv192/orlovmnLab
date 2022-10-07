@@ -30,6 +30,18 @@ public class Employee {
         this.salary = salary;
     }
 
+    public Employee(Employee employee) {
+        this.id = employee.getId();
+        this.fullName = employee.getFullName();
+        this.birthDate = employee.getBirthDate();
+        this.job = employee.getJob();
+        this.bank = employee.getBank();
+        this.workInOffice = employee.isWorkInOffice();
+        this.bankOffice = employee.getBankOffice();
+        this.canApplyLoan = employee.isCanApplyLoan();
+        this.salary = employee.getSalary();
+    }
+
     public Long getId() {
         return id;
     }

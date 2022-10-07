@@ -34,6 +34,18 @@ public class Bank {
         this.interestRate = interestRate;
     }
 
+    public Bank(Bank bank) {
+        this.id = bank.getId();
+        this.name = bank.getName();
+        this.numberOfOffices = bank.getNumberOfOffices();
+        this.numberOfAtms = bank.getNumberOfAtms();
+        this.numberOfEmployees = bank.getNumberOfEmployees();
+        this.numberOfClients = bank.getNumberOfClients();
+        this.rating = bank.getRating();
+        this.moneyAmount = bank.getMoneyAmount();
+        this.interestRate = bank.getInterestRate();
+    }
+
     public Long getId() {
         return id;
     }

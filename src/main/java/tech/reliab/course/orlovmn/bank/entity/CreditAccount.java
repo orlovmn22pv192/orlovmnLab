@@ -34,6 +34,20 @@ public class CreditAccount {
         this.paymentAccount = paymentAccount;
     }
 
+    public CreditAccount(CreditAccount creditAccount) {
+        this.id = creditAccount.getId();
+        this.user = creditAccount.getUser();
+        this.bankName = creditAccount.getBankName();
+        this.start = creditAccount.getStart();
+        this.end = creditAccount.getEnd();
+        this.monthNumber = creditAccount.getMonthNumber();
+        this.sum = creditAccount.getSum();
+        this.monthPayment = creditAccount.getMonthPayment();
+        this.interestRate = creditAccount.getInterestRate();
+        this.employee = creditAccount.getEmployee();
+        this.paymentAccount = creditAccount.getPaymentAccount();
+    }
+
     public PaymentAccount getPaymentAccount() {
         return paymentAccount;
     }

@@ -17,6 +17,13 @@ public class PaymentAccount {
         this.sum = sum;
     }
 
+    public PaymentAccount(PaymentAccount paymentAccount) {
+        this.id = paymentAccount.getId();
+        this.user = paymentAccount.getUser();
+        this.bankName = paymentAccount.getBankName();
+        this.sum = paymentAccount.getSum();
+    }
+
     public Long getId() {
         return id;
     }
