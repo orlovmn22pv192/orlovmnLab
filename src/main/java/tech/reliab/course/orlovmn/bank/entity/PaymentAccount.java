@@ -6,11 +6,11 @@ public class PaymentAccount {
     Long id;
     User user;
     String bankName;
-    BigDecimal sum;
+    double sum;
 
     public  PaymentAccount() {}
 
-    public PaymentAccount(Long id, User user, String bankName, BigDecimal sum) {
+    public PaymentAccount(Long id, User user, String bankName, double sum) {
         this.id = id;
         this.user = user;
         this.bankName = bankName;
@@ -48,11 +48,11 @@ public class PaymentAccount {
         this.bankName = bankName;
     }
 
-    public BigDecimal getSum() {
+    public double getSum() {
         return sum;
     }
 
-    public void setSum(BigDecimal sum) {
+    public void setSum(double sum) {
         this.sum = sum;
     }
 
@@ -60,7 +60,7 @@ public class PaymentAccount {
     public String toString() {
         return "PaymentAccount{" +
                 "id=" + id +
-                ", user=" + user +
+                ", userId=" + user.getId() +
                 ", bankName='" + bankName + '\'' +
                 ", sum=" + sum +
                 '}';

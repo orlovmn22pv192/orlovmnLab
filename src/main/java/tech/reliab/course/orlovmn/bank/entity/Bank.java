@@ -11,20 +11,14 @@ public class Bank {
     int numberOfEmployees = 0;
     int numberOfClients = 0;
     int rating;
-    BigDecimal moneyAmount;
-    BigDecimal interestRate;
+    double moneyAmount;
+    double interestRate;
 
     public Bank() {}
 
-    public Bank(Long id, String name){
-        this.id = id;
-        this.name = name;
-
-    }
-
     public Bank(Long id, String name, int numberOfOffices, int numberOfAtms,
-                int numberOfEmployees, int numberOfClients, int rating, BigDecimal moneyAmount,
-                BigDecimal interestRate) {
+                int numberOfEmployees, int numberOfClients, int rating, double moneyAmount,
+                double interestRate) {
         this.id = id;
         this.name = name;
         this.numberOfOffices = numberOfOffices;
@@ -104,19 +98,19 @@ public class Bank {
         this.rating = rating;
     }
 
-    public BigDecimal getMoneyAmount() {
+    public double getMoneyAmount() {
         return moneyAmount;
     }
 
-    public void setMoneyAmount(BigDecimal moneyAmount) {
+    public void setMoneyAmount(double moneyAmount) {
         this.moneyAmount = moneyAmount;
     }
 
-    public BigDecimal getInterestRate() {
+    public double getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(BigDecimal interestRate) {
+    public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
 

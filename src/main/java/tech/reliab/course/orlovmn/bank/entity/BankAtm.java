@@ -9,22 +9,25 @@ public class BankAtm {
     String name;
     AtmStatus status;
     String address;
+    Bank bank;
     BankOffice bankOffice;
     Employee employee;
     boolean canPaymentOfMoney;
     boolean canDepositMoney;
-    BigDecimal moneyAmount;
-    BigDecimal maintenance;
+    double moneyAmount;
+    double maintenance;
 
     public BankAtm() {}
 
     public BankAtm(Long id, String name, AtmStatus status, String address,
-                   BankOffice bankOffice, Employee employee, boolean canPaymentOfMoney,
-                   boolean canDepositMoney, BigDecimal moneyAmount, BigDecimal maintenance) {
+                   Bank bank, BankOffice bankOffice, Employee employee,
+                   boolean canPaymentOfMoney, boolean canDepositMoney,
+                   double moneyAmount, double maintenance) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.address = address;
+        this.bank = bank;
         this.bankOffice = bankOffice;
         this.employee = employee;
         this.canPaymentOfMoney = canPaymentOfMoney;
@@ -44,6 +47,14 @@ public class BankAtm {
         this.canDepositMoney = bankAtm.isCanDepositMoney();
         this.moneyAmount = bankAtm.getMoneyAmount();
         this.maintenance = bankAtm.getMaintenance();
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 
     public Long getId() {
@@ -110,19 +121,19 @@ public class BankAtm {
         this.canDepositMoney = canDepositMoney;
     }
 
-    public BigDecimal getMoneyAmount() {
+    public double getMoneyAmount() {
         return moneyAmount;
     }
 
-    public void setMoneyAmount(BigDecimal moneyAmount) {
+    public void setMoneyAmount(double moneyAmount) {
         this.moneyAmount = moneyAmount;
     }
 
-    public BigDecimal getMaintenance() {
+    public double getMaintenance() {
         return maintenance;
     }
 
-    public void setMaintenance(BigDecimal maintenance) {
+    public void setMaintenance(double maintenance) {
         this.maintenance = maintenance;
     }
 
@@ -130,13 +141,14 @@ public class BankAtm {
     public String toString() {
         return "BankAtm{" +
                 "id=" + id +
+                ", bank_id=" + bank.getId() +
+                ", office=" + bankOffice.getName() +
+                ", employee=" + employee.getFullName() +
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", address='" + address + '\'' +
-                ", bankOffice=" + bankOffice +
-                ", employee=" + employee +
-                ", isCanPaymentOfMoney=" + canPaymentOfMoney +
-                ", isCanDepositMoney=" + canDepositMoney +
+                ", canPaymentOfMoney=" + canPaymentOfMoney +
+                ", canDepositMoney=" + canDepositMoney +
                 ", moneyAmount=" + moneyAmount +
                 ", maintenance=" + maintenance +
                 '}';

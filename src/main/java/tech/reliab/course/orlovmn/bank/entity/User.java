@@ -8,17 +8,17 @@ public class User {
     String fullName;
     Date birthDate;
     String job;
-    BigDecimal salary;
+    double salary;
     Bank bank;
     CreditAccount creditAccount;
     PaymentAccount paymentAccount;
-    int creditRating;
+    double creditRating;
 
     public User() {}
 
     public User(Long id, String fullName, Date birthDate, String job,
-                BigDecimal salary, Bank bank, CreditAccount creditAccount,
-                PaymentAccount paymentAccount, int creditRating) {
+                double salary, Bank bank, CreditAccount creditAccount,
+                PaymentAccount paymentAccount, double creditRating) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
@@ -74,11 +74,11 @@ public class User {
         this.job = job;
     }
 
-    public BigDecimal getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(BigDecimal salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
@@ -106,11 +106,11 @@ public class User {
         this.paymentAccount = paymentAccount;
     }
 
-    public int getCreditRating() {
+    public double getCreditRating() {
         return creditRating;
     }
 
-    public void setCreditRating(int creditRating) {
+    public void setCreditRating(double creditRating) {
         this.creditRating = creditRating;
     }
 
@@ -122,9 +122,9 @@ public class User {
                 ", birthDate=" + birthDate +
                 ", job='" + job + '\'' +
                 ", salary=" + salary +
-                ", bank=" + bank +
-                ", creditAccount=" + creditAccount +
-                ", paymentAccount=" + paymentAccount +
+                ", bank_id=" + bank.getId() +
+                ", creditAccountId=" + creditAccount.getId() +
+                ", paymentAccountId=" + paymentAccount.getId() +
                 ", creditRating=" + creditRating +
                 '}';
     }

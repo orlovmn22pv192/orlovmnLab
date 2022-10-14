@@ -3,7 +3,7 @@ package tech.reliab.course.orlovmn.bank.entity;
 import java.math.BigDecimal;
 
 public class BankOffice {
-    Long id;
+    Bank bank;
     String name;
     String address;
     boolean isWorking;
@@ -12,16 +12,16 @@ public class BankOffice {
     boolean canApplyLoan;
     boolean canPaymentOfMoney;
     boolean canDepositMoney;
-    BigDecimal moneyAmount;
-    BigDecimal rent;
+    double moneyAmount;
+    double rent;
 
     public BankOffice() {}
 
-    public BankOffice(Long id, String name, String address, boolean isWorking,
+    public BankOffice(Bank bank, String name, String address, boolean isWorking,
                       boolean isPossiblePlaceAtm, int atmNumber, boolean canApplyLoan,
-                      boolean canPaymentOfMoney, boolean canDepositMoney, BigDecimal moneyAmount,
-                      BigDecimal rent) {
-        this.id = id;
+                      boolean canPaymentOfMoney, boolean canDepositMoney, double moneyAmount,
+                      double rent) {
+        this.bank = bank;
         this.name = name;
         this.address = address;
         this.isWorking = isWorking;
@@ -35,7 +35,7 @@ public class BankOffice {
     }
 
     public BankOffice(BankOffice bankOffice) {
-        this.id = bankOffice.getId();
+        this.bank = bankOffice.getBank();
         this.name = bankOffice.getName();
         this.address = bankOffice.getAddress();
         this.isWorking = bankOffice.isWorking();
@@ -48,12 +48,12 @@ public class BankOffice {
         this.rent = bankOffice.getRent();
     }
 
-    public Long getId() {
-        return id;
+    public Bank getBank() {
+        return bank;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Bank bank) {
+        this.bank = bank;
     }
 
     public String getName() {
@@ -120,26 +120,26 @@ public class BankOffice {
         this.canDepositMoney = canDepositMoney;
     }
 
-    public BigDecimal getMoneyAmount() {
+    public double getMoneyAmount() {
         return moneyAmount;
     }
 
-    public void setMoneyAmount(BigDecimal moneyAmount) {
+    public void setMoneyAmount(double moneyAmount) {
         this.moneyAmount = moneyAmount;
     }
 
-    public BigDecimal getRent() {
+    public double getRent() {
         return rent;
     }
 
-    public void setRent(BigDecimal rent) {
+    public void setRent(double rent) {
         this.rent = rent;
     }
 
     @Override
     public String toString() {
         return "BankOffice{" +
-                "id=" + id +
+                "bank_id=" + bank.getId() +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", isWorking=" + isWorking +

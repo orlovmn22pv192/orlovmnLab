@@ -12,13 +12,13 @@ public class Employee {
     boolean workInOffice;
     BankOffice bankOffice;
     boolean canApplyLoan;
-    BigDecimal salary;
+    double salary;
 
     public Employee() {}
 
     public Employee(Long id, String fullName, Date birthDate, String job,
                     Bank bank, boolean workInOffice, BankOffice bankOffice,
-                    boolean canApplyLoan, BigDecimal salary) {
+                    boolean canApplyLoan, double salary) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
@@ -106,11 +106,11 @@ public class Employee {
         this.canApplyLoan = canApplyLoan;
     }
 
-    public BigDecimal getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(BigDecimal salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
@@ -118,12 +118,12 @@ public class Employee {
     public String toString() {
         return "Employee{" +
                 "id=" + id +
+                ", bank_id=" + bank.getId() +
+                ", office=" + bankOffice.getName() +
                 ", fullName='" + fullName + '\'' +
                 ", birthDate=" + birthDate +
                 ", job='" + job + '\'' +
-                ", bank=" + bank +
                 ", workInOffice=" + workInOffice +
-                ", bankOffice=" + bankOffice +
                 ", canApplyLoan=" + canApplyLoan +
                 ", salary=" + salary +
                 '}';

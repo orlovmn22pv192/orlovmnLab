@@ -10,17 +10,17 @@ public class CreditAccount {
     Date start;
     Date end;
     int monthNumber;
-    BigDecimal sum;
-    BigDecimal monthPayment;
-    BigDecimal interestRate;
+    double sum;
+    double monthPayment;
+    double interestRate;
     Employee employee;
     PaymentAccount paymentAccount;
 
     public CreditAccount() {}
 
     public CreditAccount(Long id, User user, String bankName, Date start,
-                         Date end, int monthNumber, BigDecimal sum, BigDecimal monthPayment,
-                         BigDecimal interestRate, Employee employee, PaymentAccount paymentAccount) {
+                         Date end, int monthNumber, double sum, double monthPayment,
+                         double interestRate, Employee employee, PaymentAccount paymentAccount) {
         this.id = id;
         this.user = user;
         this.bankName = bankName;
@@ -112,27 +112,27 @@ public class CreditAccount {
         this.monthNumber = monthNumber;
     }
 
-    public BigDecimal getSum() {
+    public double getSum() {
         return sum;
     }
 
-    public void setSum(BigDecimal sum) {
+    public void setSum(double sum) {
         this.sum = sum;
     }
 
-    public BigDecimal getMonthPayment() {
+    public double getMonthPayment() {
         return monthPayment;
     }
 
-    public void setMonthPayment(BigDecimal monthPayment) {
+    public void setMonthPayment(double monthPayment) {
         this.monthPayment = monthPayment;
     }
 
-    public BigDecimal getInterestRate() {
+    public double getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(BigDecimal interestRate) {
+    public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
 
@@ -140,7 +140,7 @@ public class CreditAccount {
     public String toString() {
         return "CreditAccount{" +
                 "id=" + id +
-                ", user=" + user +
+                ", userId=" + user.getId() +
                 ", bankName='" + bankName + '\'' +
                 ", start=" + start +
                 ", end=" + end +
@@ -148,8 +148,8 @@ public class CreditAccount {
                 ", sum=" + sum +
                 ", monthPayment=" + monthPayment +
                 ", interestRate=" + interestRate +
-                ", employee=" + employee +
-                ", paymentAccount=" + paymentAccount +
+                ", employeeId=" + employee.getId() +
+                ", paymentAccountId=" + paymentAccount.getId() +
                 '}';
     }
 }
