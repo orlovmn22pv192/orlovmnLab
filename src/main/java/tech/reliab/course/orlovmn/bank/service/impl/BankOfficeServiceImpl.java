@@ -31,6 +31,7 @@ public class BankOfficeServiceImpl implements BankOfficeService {
                 bank.getMoneyAmount(),
                 rent
         );
+        bank.setNumberOfOffices(bank.getNumberOfOffices()+1);
         return bankOffice;
     }
 
@@ -41,16 +42,6 @@ public class BankOfficeServiceImpl implements BankOfficeService {
     @Override
     public BankOffice read(){
         return bankOffice;
-    }
-
-    /**
-     * обновляет поля количество банкоматов и количество денег
-     *
-     */
-    @Override
-    public void update(){
-        this.bankOffice.setAtmNumber(this.bankOffice.getBank().getNumberOfAtms());
-        this.bankOffice.setMoneyAmount(this.bankOffice.getBank().getMoneyAmount());
     }
 
     /**

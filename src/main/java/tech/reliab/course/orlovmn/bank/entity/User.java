@@ -1,12 +1,10 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import tech.reliab.course.orlovmn.bank.entity.parentClasses.Person;
 
-public class User {
-    Long id;
-    String fullName;
-    Date birthDate;
+import java.time.LocalDate;
+
+public class User extends Person {
     String job;
     double salary;
     Bank bank;
@@ -16,12 +14,22 @@ public class User {
 
     public User() {}
 
-    public User(Long id, String fullName, Date birthDate, String job,
+    public User(Long id, String firstName, String lastName, LocalDate birthDate, String job,
                 double salary, Bank bank, CreditAccount creditAccount,
                 PaymentAccount paymentAccount, double creditRating) {
-        this.id = id;
-        this.fullName = fullName;
-        this.birthDate = birthDate;
+        super(id, firstName, lastName, birthDate);
+        this.job = job;
+        this.salary = salary;
+        this.bank = bank;
+        this.creditAccount = creditAccount;
+        this.paymentAccount = paymentAccount;
+        this.creditRating = creditRating;
+    }
+
+    public User(Long id, String firstName, String lastName, String patronymic, LocalDate birthDate, String job,
+                double salary, Bank bank, CreditAccount creditAccount,
+                PaymentAccount paymentAccount, double creditRating) {
+        super(id, firstName, lastName, patronymic, birthDate);
         this.job = job;
         this.salary = salary;
         this.bank = bank;
@@ -31,39 +39,17 @@ public class User {
     }
 
     public User(User user) {
-        this.id = user.getId();
-        this.fullName = user.getFullName();
-        this.birthDate = user.getBirthDate();
+        super.setId(user.getId());
+        super.setFirstName(user.getFirstName());
+        super.setLastName(user.getLastName());
+        super.setPatronymic(user.getPatronymic());
+        super.setBirthDate(user.getBirthDate());
         this.job = user.getJob();
         this.salary = user.getSalary();
         this.bank = user.getBank();
         this.creditAccount = user.getCreditAccount();
         this.paymentAccount = user.getPaymentAccount();
         this.creditRating = user.getCreditRating();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getJob() {
@@ -117,9 +103,9 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", birthDate=" + birthDate +
+                "id=" + super.getId() +
+                ", fullName='" + super.getFullName() + '\'' +
+                ", birthDate=" + super.getBirthDate() +
                 ", job='" + job + '\'' +
                 ", salary=" + salary +
                 ", bank_id=" + bank.getId() +

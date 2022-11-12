@@ -2,13 +2,13 @@ package tech.reliab.course.orlovmn.bank.service;
 
 import tech.reliab.course.orlovmn.bank.entity.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface CreditAccountService {
     CreditAccount create(User user,
                          Bank bank,
-                         Date start,
-                         Date end,
+                         LocalDate start,
+                         LocalDate end,
                          int month,
                          double sum,
                          double monthPayment,

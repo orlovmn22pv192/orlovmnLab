@@ -1,7 +1,6 @@
 package tech.reliab.course.orlovmn.bank.entity;
-import tech.reliab.course.orlovmn.bank.utils.AtmStatus;
 
-import java.math.BigDecimal;
+import tech.reliab.course.orlovmn.bank.enums.AtmStatus;
 
 
 public class BankAtm {

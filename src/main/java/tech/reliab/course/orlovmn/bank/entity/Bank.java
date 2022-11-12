@@ -1,8 +1,5 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
-import java.math.BigDecimal;
-import java.util.Random;
-
 public class Bank {
     Long id;
     String name;
@@ -13,6 +10,8 @@ public class Bank {
     int rating;
     double moneyAmount;
     double interestRate;
+
+
 
     public Bank() {}
 

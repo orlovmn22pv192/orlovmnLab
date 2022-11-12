@@ -1,4 +1,4 @@
-package tech.reliab.course.orlovmn.bank.utils;
+package tech.reliab.course.orlovmn.bank.enums;
 
 public enum AtmStatus{
     WORKING,

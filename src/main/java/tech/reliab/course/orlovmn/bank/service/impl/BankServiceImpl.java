@@ -1,8 +1,8 @@
 package tech.reliab.course.orlovmn.bank.service.impl;
+
 import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.service.BankService;
 
-import java.math.BigDecimal;
 import java.util.Random;
 
 public class BankServiceImpl implements BankService {

@@ -5,7 +5,7 @@ import tech.reliab.course.orlovmn.bank.entity.BankAtm;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.entity.Employee;
 import tech.reliab.course.orlovmn.bank.service.BankAtmService;
-import tech.reliab.course.orlovmn.bank.utils.AtmStatus;
+import tech.reliab.course.orlovmn.bank.enums.AtmStatus;
 
 public class BankAtmServiceImpl implements BankAtmService {
 
@@ -37,6 +37,7 @@ public class BankAtmServiceImpl implements BankAtmService {
                 maintenance
         );
         bank.setNumberOfAtms(bank.getNumberOfAtms()+1);
+        bankOffice.setAtmNumber(bankOffice.getAtmNumber()+1);
         return bankAtm;
     }
 
@@ -47,15 +48,6 @@ public class BankAtmServiceImpl implements BankAtmService {
     @Override
     public BankAtm read(){
         return bankAtm;
-    }
-
-    /**
-     *  обновляет поля адрес и количество денег
-     */
-    @Override
-    public void update(){
-        this.bankAtm.setAddress(this.bankAtm.getBankOffice().getAddress());
-        this.bankAtm.setMoneyAmount(this.bankAtm.getBank().getMoneyAmount());
     }
 
     /**

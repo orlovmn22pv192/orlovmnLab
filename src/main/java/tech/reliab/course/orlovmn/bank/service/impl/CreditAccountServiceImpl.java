@@ -3,7 +3,7 @@ package tech.reliab.course.orlovmn.bank.service.impl;
 import tech.reliab.course.orlovmn.bank.entity.*;
 import tech.reliab.course.orlovmn.bank.service.CreditAccountService;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CreditAccountServiceImpl implements CreditAccountService {
     private Long id = 0L;
@@ -23,16 +23,8 @@ public class CreditAccountServiceImpl implements CreditAccountService {
      * @return - возвращает созданный кредитный счет
      */
     @Override
-    public CreditAccount create(User user,
-                         Bank bank,
-                         Date start,
-                         Date end,
-                         int month,
-                         double sum,
-                         double monthPayment,
-                         Employee employee,
-                         PaymentAccount paymentAccount
-    ){
+    public CreditAccount create(User user, Bank bank, LocalDate start, LocalDate end, int month,
+                         double sum, double monthPayment, Employee employee, PaymentAccount paymentAccount){
         creditAccount = new CreditAccount(
                 ++id,
                 user,

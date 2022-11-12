@@ -1,14 +1,13 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CreditAccount {
     Long id;
     User user;
     String bankName;
-    Date start;
-    Date end;
+    LocalDate start;
+    LocalDate end;
     int monthNumber;
     double sum;
     double monthPayment;
@@ -18,8 +17,8 @@ public class CreditAccount {
 
     public CreditAccount() {}
 
-    public CreditAccount(Long id, User user, String bankName, Date start,
-                         Date end, int monthNumber, double sum, double monthPayment,
+    public CreditAccount(Long id, User user, String bankName, LocalDate start,
+                         LocalDate end, int monthNumber, double sum, double monthPayment,
                          double interestRate, Employee employee, PaymentAccount paymentAccount) {
         this.id = id;
         this.user = user;
@@ -88,19 +87,19 @@ public class CreditAccount {
         this.bankName = bankName;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 

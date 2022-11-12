@@ -8,7 +8,6 @@ import tech.reliab.course.orlovmn.bank.entity.Employee;
 public interface BankAtmService {
     BankAtm create(String name, Bank bank, BankOffice bankOffice, Employee employee, double maintenance);
     BankAtm read();
-    void update();
     void update(BankAtm bankAtm);
     void delete(BankAtm bankAtm);
 }

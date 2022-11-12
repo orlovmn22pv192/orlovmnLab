@@ -1,7 +1,5 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
-import java.math.BigDecimal;
-
 public class BankOffice {
     Bank bank;
     String name;

@@ -1,12 +1,10 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import tech.reliab.course.orlovmn.bank.entity.parentClasses.Person;
 
-public class Employee {
-    Long id;
-    String fullName;
-    Date birthDate;
+import java.time.LocalDate;
+
+public class Employee extends Person {
     String job;
     Bank bank;
     boolean workInOffice;
@@ -16,12 +14,22 @@ public class Employee {
 
     public Employee() {}
 
-    public Employee(Long id, String fullName, Date birthDate, String job,
+    public Employee(Long id, String firstName, String lastName, LocalDate birthDate, String job,
                     Bank bank, boolean workInOffice, BankOffice bankOffice,
                     boolean canApplyLoan, double salary) {
-        this.id = id;
-        this.fullName = fullName;
-        this.birthDate = birthDate;
+        super(id, firstName, lastName, birthDate);
+        this.job = job;
+        this.bank = bank;
+        this.workInOffice = workInOffice;
+        this.bankOffice = bankOffice;
+        this.canApplyLoan = canApplyLoan;
+        this.salary = salary;
+    }
+
+    public Employee(Long id, String firstName, String lastName, String patronymic, LocalDate birthDate, String job,
+                    Bank bank, boolean workInOffice, BankOffice bankOffice,
+                    boolean canApplyLoan, double salary) {
+        super(id, firstName, lastName, patronymic, birthDate);
         this.job = job;
         this.bank = bank;
         this.workInOffice = workInOffice;
@@ -31,39 +39,17 @@ public class Employee {
     }
 
     public Employee(Employee employee) {
-        this.id = employee.getId();
-        this.fullName = employee.getFullName();
-        this.birthDate = employee.getBirthDate();
+        super.setId(employee.getId());
+        super.setFirstName(employee.getFirstName());
+        super.setLastName(employee.getLastName());
+        super.setPatronymic(employee.getPatronymic());
+        super.setBirthDate(employee.getBirthDate());
         this.job = employee.getJob();
         this.bank = employee.getBank();
         this.workInOffice = employee.isWorkInOffice();
         this.bankOffice = employee.getBankOffice();
         this.canApplyLoan = employee.isCanApplyLoan();
         this.salary = employee.getSalary();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getJob() {
@@ -117,11 +103,11 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", bank_id=" + bank.getId() +
                 ", office=" + bankOffice.getName() +
-                ", fullName='" + fullName + '\'' +
-                ", birthDate=" + birthDate +
+                ", fullName='" + super.getFullName() + '\'' +
+                ", birthDate=" + super.getBirthDate() +
                 ", job='" + job + '\'' +
                 ", workInOffice=" + workInOffice +
                 ", canApplyLoan=" + canApplyLoan +

@@ -1,7 +1,5 @@
 package tech.reliab.course.orlovmn.bank.entity;
 
-import java.math.BigDecimal;
-
 public class PaymentAccount {
     Long id;
     User user;

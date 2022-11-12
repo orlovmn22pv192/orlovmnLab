@@ -5,7 +5,7 @@ import tech.reliab.course.orlovmn.bank.service.*;
 import tech.reliab.course.orlovmn.bank.service.impl.*;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,8 +26,9 @@ public class Main {
         BankOffice office = officeService.create("MyOffice", bank, "MyAddress", 1000.);
         //создаем сотрудника
         Employee employee = employeeService.create(
-                "name",
-                Date.from(Instant.now()),
+                "Max",
+                "Orlov",
+                LocalDate.now(),
                 "job",
                 bank,
                 office,
@@ -36,23 +37,21 @@ public class Main {
         //создаем банкомат
         BankAtm atm = atmService.create("atm", bank, office, employee, 1000.);
         //создаем клиента
-        User user = userService.create("user",Date.from(Instant.now()),"job",bank);
+        User user = userService.create("Max", "Orlov", LocalDate.now(),"job",bank);
         //создаем платежный счет
         PaymentAccount paymentAccount = paymentAccountService.create(user, bank.getName());
         //создаем кредитный счет
         CreditAccount creditAccount = creditAccountService.create(
                 user,
                 bank,
-                Date.from(Instant.now()),
-                Date.from(Instant.now()),
+                LocalDate.now(),
+                LocalDate.now(),
                 12,
                 12,
                 1,
                 employee,
                 paymentAccount
         );
-
-        officeService.update();
         System.out.println(bank);
         System.out.println(office);
         System.out.println(employee);

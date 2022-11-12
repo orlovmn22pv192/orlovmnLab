@@ -5,7 +5,7 @@ import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.entity.Employee;
 import tech.reliab.course.orlovmn.bank.service.EmployeeService;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -14,7 +14,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      *
-     * @param fullName - ФИО сотрудника
+     * @param firstName - имя
+     * @param lastName - фамилия
      * @param birthDate - дата рождения сотрудника
      * @param job - должность
      * @param bank - банк
@@ -23,10 +24,12 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return - возвращает созданный объект сотрудника
      */
     @Override
-    public Employee create(String fullName, Date birthDate, String job, Bank bank, BankOffice bankOffice, double salary){
+    public Employee create(String firstName, String lastName, LocalDate birthDate,
+            String job, Bank bank, BankOffice bankOffice, double salary){
         employee = new Employee(
                 ++id,
-                fullName,
+                firstName,
+                lastName,
                 birthDate,
                 job,
                 bank,
@@ -35,6 +38,39 @@ public class EmployeeServiceImpl implements EmployeeService {
                 true,
                 salary
         );
+        bank.setNumberOfEmployees(bank.getNumberOfEmployees()+1);
+        return employee;
+    }
+
+    /**
+     *
+     * @param firstName - имя
+     * @param lastName - фамилия
+     * @param patronymic - отчество
+     * @param birthDate - дата рождения сотрудника
+     * @param job - должность
+     * @param bank - банк
+     * @param bankOffice - офис банка
+     * @param salary - зарплата
+     * @return - возвращает созданный объект сотрудника
+     */
+    @Override
+    public Employee create(String firstName, String lastName, String patronymic, LocalDate birthDate,
+            String job, Bank bank, BankOffice bankOffice, double salary){
+        employee = new Employee(
+                ++id,
+                firstName,
+                lastName,
+                patronymic,
+                birthDate,
+                job,
+                bank,
+                true,
+                bankOffice,
+                true,
+                salary
+        );
+        bank.setNumberOfEmployees(bank.getNumberOfEmployees()+1);
         return employee;
     }
 
