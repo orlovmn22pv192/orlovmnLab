@@ -11,8 +11,6 @@ public class Bank {
     double moneyAmount;
     double interestRate;
 
-
-
     public Bank() {}
 
     public Bank(Long id, String name, int numberOfOffices, int numberOfAtms,

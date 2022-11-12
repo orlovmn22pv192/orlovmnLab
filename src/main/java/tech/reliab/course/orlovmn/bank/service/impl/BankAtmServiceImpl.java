@@ -4,26 +4,34 @@ import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.BankAtm;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.entity.Employee;
-import tech.reliab.course.orlovmn.bank.service.BankAtmService;
 import tech.reliab.course.orlovmn.bank.enums.AtmStatus;
+import tech.reliab.course.orlovmn.bank.service.BankAtmService;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
+/**
+ *  Singleton
+ */
 public class BankAtmServiceImpl implements BankAtmService {
+    private static  BankAtmServiceImpl INSTANCE;
+
+    private BankAtmServiceImpl(){}
+
+    public static BankAtmServiceImpl getInstance(){
+        if (INSTANCE==null){
+            INSTANCE = new BankAtmServiceImpl();
+        }
+        return INSTANCE;
+    }
 
     private Long id = 0L;
-    private BankAtm bankAtm;
+    private LinkedHashMap<Long, BankAtm> atms = new LinkedHashMap<Long, BankAtm>();
 
-    /**
-     *
-     * @param name - назание банкомата
-     * @param bank - банк
-     * @param bankOffice - офис банка
-     * @param employee - обслуживающий сотрудник
-     * @param maintenance - стоимость обслуживания
-     * @return - возвращает созданный объект банкомат
-     */
+
     @Override
     public BankAtm create(String name, Bank bank, BankOffice bankOffice, Employee employee, double maintenance){
-        bankAtm = new BankAtm(
+        var bankAtm = new BankAtm(
                 ++id,
                 name,
                 AtmStatus.WORKING,
@@ -41,34 +49,26 @@ public class BankAtmServiceImpl implements BankAtmService {
         return bankAtm;
     }
 
-    /**
-     *
-     * @return - возвращает банкомат
-     */
     @Override
-    public BankAtm read(){
-        return bankAtm;
+    public List<BankAtm> findAll(){
+        return atms.values().stream().toList();
     }
 
-    /**
-     *
-     * @param bankAtm - новый объект банкомат
-     */
     @Override
-    public void update(BankAtm bankAtm){
-        this.bankAtm = bankAtm;
+    public void addBankAtm(BankAtm atm){
+        atms.put(atm.getId(), atm);
     }
 
-    /**
-     *
-     * @param bankAtm - банкомат для удаления
-     */
     @Override
-    public void delete(BankAtm bankAtm){
-        if(this.bankAtm == bankAtm){
-            this.bankAtm = null;
-        }
+    public BankAtm getBankAtmById(Long id){
+        return atms.get(id);
     }
+
+    @Override
+    public void delBankAtmById(Long id){
+        atms.remove(id);
+    }
+
 
 }
 

@@ -6,27 +6,31 @@ import tech.reliab.course.orlovmn.bank.entity.Employee;
 import tech.reliab.course.orlovmn.bank.service.EmployeeService;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.List;
 
+/**
+ *  Singleton
+ */
 public class EmployeeServiceImpl implements EmployeeService {
+    private static  EmployeeServiceImpl INSTANCE;
+
+    private EmployeeServiceImpl(){}
+
+    public static EmployeeServiceImpl getInstance(){
+        if (INSTANCE==null){
+            INSTANCE = new EmployeeServiceImpl();
+        }
+        return INSTANCE;
+    }
 
     private Long id = 0L;
-    private Employee employee;
+    private LinkedHashMap<Long, Employee> employees = new LinkedHashMap<Long, Employee>();
 
-    /**
-     *
-     * @param firstName - имя
-     * @param lastName - фамилия
-     * @param birthDate - дата рождения сотрудника
-     * @param job - должность
-     * @param bank - банк
-     * @param bankOffice - офис банка
-     * @param salary - зарплата
-     * @return - возвращает созданный объект сотрудника
-     */
     @Override
     public Employee create(String firstName, String lastName, LocalDate birthDate,
             String job, Bank bank, BankOffice bankOffice, double salary){
-        employee = new Employee(
+        var employee = new Employee(
                 ++id,
                 firstName,
                 lastName,
@@ -42,22 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
-    /**
-     *
-     * @param firstName - имя
-     * @param lastName - фамилия
-     * @param patronymic - отчество
-     * @param birthDate - дата рождения сотрудника
-     * @param job - должность
-     * @param bank - банк
-     * @param bankOffice - офис банка
-     * @param salary - зарплата
-     * @return - возвращает созданный объект сотрудника
-     */
     @Override
     public Employee create(String firstName, String lastName, String patronymic, LocalDate birthDate,
             String job, Bank bank, BankOffice bankOffice, double salary){
-        employee = new Employee(
+        var employee = new Employee(
                 ++id,
                 firstName,
                 lastName,
@@ -74,33 +66,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
-    /**
-     *
-     * @return - возвращает объект сотрудник
-     */
     @Override
-    public Employee read(){
-        return employee;
+    public List<Employee> findAll(){
+        return employees.values().stream().toList();
     }
 
-    /**
-     *
-     * @param employee - новый сотрудник
-     */
     @Override
-    public void update(Employee employee){
-        this.employee = employee;
+    public void addEmployee(Employee employee){
+        employees.put(employee.getId(), employee);
     }
 
-    /**
-     *
-     * @param employee - сотрудник для удаления
-     */
     @Override
-    public void delete(Employee employee){
-        if(this.employee == employee){
-            this.employee = null;
-        }
+    public Employee getEmployeeById(Long id){
+        return employees.get(id);
+    }
+
+    @Override
+    public void delEmployeeById(Long id){
+        employees.remove(id);
     }
 
 }

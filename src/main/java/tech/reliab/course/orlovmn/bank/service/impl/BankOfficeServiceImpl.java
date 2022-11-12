@@ -4,21 +4,32 @@ import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.service.BankOfficeService;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
+/**
+ *  Singleton
+ */
 public class BankOfficeServiceImpl implements BankOfficeService {
 
-    private BankOffice bankOffice;
+    private static  BankOfficeServiceImpl INSTANCE;
 
-    /**
-     *
-     * @param name - имя офиса
-     * @param bank - банк офиса
-     * @param address - адрес офиса
-     * @param rent - стоимость аренды офиса
-     * @return - возвращает созданный объект офис
-     */
+    private BankOfficeServiceImpl(){}
+
+    public static BankOfficeServiceImpl getInstance(){
+        if (INSTANCE==null){
+            INSTANCE = new BankOfficeServiceImpl();
+        }
+        return INSTANCE;
+    }
+
+    Long id = 0L;
+    private LinkedHashMap<Long, BankOffice> offices = new LinkedHashMap<Long, BankOffice>();
+
     @Override
     public BankOffice create(String name, Bank bank, String address, double rent){
-        bankOffice = new BankOffice(
+        var bankOffice = new BankOffice(
+                ++id,
                 bank,
                 name,
                 address,
@@ -35,32 +46,23 @@ public class BankOfficeServiceImpl implements BankOfficeService {
         return bankOffice;
     }
 
-    /**
-     *
-     * @return - возвращает объект офис
-     */
     @Override
-    public BankOffice read(){
-        return bankOffice;
+    public List<BankOffice> findAll(){
+        return offices.values().stream().toList();
     }
 
-    /**
-     *
-     * @param bankOffice - новый объект
-     */
     @Override
-    public  void update(BankOffice bankOffice){
-        this.bankOffice = bankOffice;
+    public void addOffice(BankOffice office){
+        offices.put(office.getId(), office);
     }
 
-    /**
-     *
-     * @param bankOffice - офис для удалеия
-     */
     @Override
-    public void delete(BankOffice bankOffice){
-        if(bankOffice == this.bankOffice){
-            this.bankOffice = null;
-        }
+    public BankOffice getOfficeById(Long id){
+        return offices.get(id);
+    }
+
+    @Override
+    public void delOfficeById(Long id){
+        offices.remove(id);
     }
 }
