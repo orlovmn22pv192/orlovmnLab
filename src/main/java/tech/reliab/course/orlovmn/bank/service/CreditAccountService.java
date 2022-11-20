@@ -1,6 +1,8 @@
 package tech.reliab.course.orlovmn.bank.service;
 
 import tech.reliab.course.orlovmn.bank.entity.*;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,7 +34,7 @@ public interface CreditAccountService {
 
     /**
      *
-     * @return список всех кредитных аккаунтов
+     * @return возвращает список всех кредитных аккаунтов
      */
     List<CreditAccount> findAll();
 
@@ -45,13 +47,13 @@ public interface CreditAccountService {
     /**
      *
      * @param id - id кредитного аккаунта
-     * @return кредитный аккаун с данным id или null
+     * @return возвращает кредитный аккаун с данным id или null
      */
-    CreditAccount getCreditAccountById(Long id);
+    CreditAccount getCreditAccountById(Long id) throws IdException;
 
     /**
      * удаляет кредитный аккаун по id
      * @param id - id кредитного аккаунта
      */
-    void delCreditAccountById(Long id);
+    void delCreditAccountById(Long id) throws DeletingNotExistentObjectException;
 }

@@ -3,6 +3,8 @@ package tech.reliab.course.orlovmn.bank.service;
 import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.entity.Employee;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,7 +43,7 @@ public interface EmployeeService {
 
     /**
      *
-     * @return список сотрудников
+     * @return возвращает список сотрудников
      */
     List<Employee> findAll();
 
@@ -54,13 +56,20 @@ public interface EmployeeService {
     /**
      *
      * @param id - id сотрудника
-     * @return сотрудник с данным id
+     * @return возвращает сотрудника с данным id
      */
-    Employee getEmployeeById(Long id);
+    Employee getEmployeeById(Long id) throws IdException;
 
     /**
      * удаляет сотрудника с данным id
      * @param id - id сотрудника
      */
-    void delEmployeeById(Long id);
+    void delEmployeeById(Long id) throws DeletingNotExistentObjectException;
+
+    /**
+     *
+     * @param officeId - id офиса
+     * @return возвращает всех сотрудников офиса с данным id
+     */
+    List<Employee> getAllEmployeesByOfficeId(Long officeId);
 }

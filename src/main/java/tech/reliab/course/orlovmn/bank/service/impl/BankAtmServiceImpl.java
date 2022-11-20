@@ -5,6 +5,10 @@ import tech.reliab.course.orlovmn.bank.entity.BankAtm;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.entity.Employee;
 import tech.reliab.course.orlovmn.bank.enums.AtmStatus;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
+import tech.reliab.course.orlovmn.bank.exceptions.NegativeSumException;
+import tech.reliab.course.orlovmn.bank.exceptions.NotEnoughMoneyException;
 import tech.reliab.course.orlovmn.bank.service.BankAtmService;
 
 import java.util.LinkedHashMap;
@@ -60,13 +64,36 @@ public class BankAtmServiceImpl implements BankAtmService {
     }
 
     @Override
-    public BankAtm getBankAtmById(Long id){
-        return atms.get(id);
+    public BankAtm getBankAtmById(Long id) throws IdException {
+        var atm = atms.get(id);
+        if(atm == null){
+            throw new IdException();
+        }
+        return atm;
     }
 
     @Override
-    public void delBankAtmById(Long id){
+    public void delBankAtmById(Long id) throws DeletingNotExistentObjectException {
+        if(atms.get(id) == null){
+            throw new DeletingNotExistentObjectException();
+        }
         atms.remove(id);
+    }
+
+    @Override
+    public List<BankAtm> getAllAtmsByOfficeId(Long officeId){
+        return findAll().stream().filter(atm->atm.getBankOffice().getId().compareTo(officeId)==0).toList();
+    }
+
+    @Override
+    public void withdrawMoney(BankAtm atm, double sum) throws NotEnoughMoneyException, NegativeSumException {
+        if(atm.getMoneyAmount()<sum){
+            throw new NotEnoughMoneyException();
+        }
+        if(sum < 0){
+            throw new NegativeSumException();
+        }
+        atm.setMoneyAmount(atm.getMoneyAmount()-sum);
     }
 
 

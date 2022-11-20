@@ -1,7 +1,10 @@
 package tech.reliab.course.orlovmn.bank.service.impl;
 
+import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.PaymentAccount;
 import tech.reliab.course.orlovmn.bank.entity.User;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 import tech.reliab.course.orlovmn.bank.service.PaymentAccountService;
 
 import java.util.LinkedHashMap;
@@ -27,13 +30,16 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
 
 
     @Override
-    public PaymentAccount create(User user, String bankName){
+    public PaymentAccount create(User user, Bank bank){
         var paymentAccount = new PaymentAccount(
                 ++id,
                 user,
-                bankName,
+                bank,
                 0
         );
+        if(!user.getBanks().contains(bank)){
+            user.addBank(bank);
+        }
         return paymentAccount;
     }
 
@@ -48,12 +54,19 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
     }
 
     @Override
-    public PaymentAccount getPaymentAccountById(Long id) {
-        return paymentAccounts.get(id);
+    public PaymentAccount getPaymentAccountById(Long id) throws IdException {
+        var paymentAccount = paymentAccounts.get(id);
+        if(paymentAccount == null){
+            throw new IdException();
+        }
+        return paymentAccount;
     }
 
     @Override
-    public void delPaymentAccountById(Long id) {
+    public void delPaymentAccountById(Long id) throws DeletingNotExistentObjectException {
+        if(paymentAccounts.get(id) == null){
+            throw new DeletingNotExistentObjectException();
+        }
         paymentAccounts.remove(id);
     }
 

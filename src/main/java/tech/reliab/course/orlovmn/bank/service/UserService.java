@@ -2,7 +2,9 @@ package tech.reliab.course.orlovmn.bank.service;
 
 import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.User;
+import tech.reliab.course.orlovmn.bank.exceptions.*;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public interface UserService {
 
     /**
      *
-     * @return список пользователей
+     * @return возвращает список пользователей
      */
     List<User> findAll();
 
@@ -44,19 +46,27 @@ public interface UserService {
     /**
      *
      * @param id - id пользователя
-     * @return пользователя с данным id
+     * @return возвращает пользователя с данным id
      */
-    User getUserById(Long id);
+    User getUserById(Long id) throws IdException;
 
     /**
      * удаляет пользователя с данным id
      * @param id - id пользователя
      */
-    void delUserById(Long id);
+    void delUserById(Long id) throws DeletingNotExistentObjectException;
 
     /**
      * выводит на экран информацию о пользователе
      * @param id - id пользователя
      */
     void outputUserInfo(Long id);
+
+    /**
+     *
+     * @param userId - id пользователя
+     * @param sum - сумма кредита
+     * @return - возвращает id кредитного счета, если кредит выдан, иначе возвращает null
+     */
+    Long getCredit(Long userId, double sum) throws NotEnoughMoneyException, NegativeSumException, IdException, LendingTermsException;
 }

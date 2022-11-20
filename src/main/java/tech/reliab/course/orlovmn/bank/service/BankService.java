@@ -1,5 +1,7 @@
 package tech.reliab.course.orlovmn.bank.service;
 import tech.reliab.course.orlovmn.bank.entity.Bank;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public interface BankService {
 
     /**
      *
-     * @return список всех банков
+     * @return возвращает список всех банков
      */
     List<Bank> findAll();
 
@@ -26,15 +28,15 @@ public interface BankService {
     /**
      *
      * @param id - id банка
-     * @return банк с данным id или null
+     * @return возвращает банк с данным id или null
      */
-    Bank getBankById(Long id);
+    Bank getBankById(Long id) throws IdException;
 
     /**
      * удаляет банк по id
      * @param id - id банка
      */
-    void delBankById(Long id);
+    void delBankById(Long id) throws DeletingNotExistentObjectException;
 
     /**
      * выводит на экран информацию о банке с данным id

@@ -1,6 +1,8 @@
 package tech.reliab.course.orlovmn.bank.service.impl;
 
 import tech.reliab.course.orlovmn.bank.entity.*;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 import tech.reliab.course.orlovmn.bank.service.CreditAccountService;
 
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class CreditAccountServiceImpl implements CreditAccountService {
         var creditAccount = new CreditAccount(
                 ++id,
                 user,
-                bank.getName(),
+                bank,
                 start,
                 end,
                 month,
@@ -55,12 +57,19 @@ public class CreditAccountServiceImpl implements CreditAccountService {
     }
 
     @Override
-    public CreditAccount getCreditAccountById(Long id) {
-        return creditAccounts.get(id);
+    public CreditAccount getCreditAccountById(Long id) throws IdException {
+        var creditAccount = creditAccounts.get(id);
+        if(creditAccount == null){
+            throw new IdException();
+        }
+        return creditAccount;
     }
 
     @Override
-    public void delCreditAccountById(Long id) {
+    public void delCreditAccountById(Long id) throws DeletingNotExistentObjectException {
+        if(creditAccounts.get(id) == null){
+            throw new DeletingNotExistentObjectException();
+        }
         creditAccounts.remove(id);
     }
 

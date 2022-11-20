@@ -3,6 +3,8 @@ package tech.reliab.course.orlovmn.bank.service.impl;
 import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.entity.Employee;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 import tech.reliab.course.orlovmn.bank.service.EmployeeService;
 
 import java.time.LocalDate;
@@ -77,13 +79,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeById(Long id){
-        return employees.get(id);
+    public Employee getEmployeeById(Long id) throws IdException {
+        var employee = employees.get(id);
+        if(employee == null){
+            throw new IdException();
+        }
+        return employee;
     }
 
     @Override
-    public void delEmployeeById(Long id){
+    public void delEmployeeById(Long id) throws DeletingNotExistentObjectException {
+        if(employees.get(id) == null){
+            throw new DeletingNotExistentObjectException();
+        }
         employees.remove(id);
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesByOfficeId(Long officeId) {
+        return findAll().stream().filter(empl->empl.getBankOffice().getId().compareTo(officeId)==0).toList();
     }
 
 }

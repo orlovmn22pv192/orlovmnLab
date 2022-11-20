@@ -1,8 +1,10 @@
 package tech.reliab.course.orlovmn.bank.service;
 
-import tech.reliab.course.orlovmn.bank.entity.CreditAccount;
+import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.PaymentAccount;
 import tech.reliab.course.orlovmn.bank.entity.User;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 
 import java.util.List;
 
@@ -11,14 +13,14 @@ public interface PaymentAccountService {
     /**
      *
      * @param user - клиент
-     * @param bankName - имя банка
+     * @param bank -  банка
      * @return - возвращает созданный объект платежный счет
      */
-    PaymentAccount create(User user, String bankName);
+    PaymentAccount create(User user, Bank bank);
 
     /**
      *
-     * @return спимок платежных счетов
+     * @return возвращает список платежных счетов
      */
     List<PaymentAccount> findAll();
 
@@ -31,13 +33,13 @@ public interface PaymentAccountService {
     /**
      *
      * @param id - id платежного счета
-     * @return платежный счет с данным id
+     * @return возвращает платежный счет с данным id
      */
-    PaymentAccount getPaymentAccountById(Long id);
+    PaymentAccount getPaymentAccountById(Long id) throws IdException;
 
     /**
      * удаляет платежный счет с данным id
      * @param id - id платежного счета
      */
-    void delPaymentAccountById(Long id);
+    void delPaymentAccountById(Long id) throws DeletingNotExistentObjectException;
 }

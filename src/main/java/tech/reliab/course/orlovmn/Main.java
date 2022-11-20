@@ -1,6 +1,6 @@
 package tech.reliab.course.orlovmn;
 
-import tech.reliab.course.orlovmn.bank.entity.*;
+import tech.reliab.course.orlovmn.bank.entity.User;
 import tech.reliab.course.orlovmn.bank.service.*;
 import tech.reliab.course.orlovmn.bank.service.impl.*;
 
@@ -42,11 +42,13 @@ public class Main {
                 }
             }
             for(int numAtm=0; numAtm<3; numAtm++){
+                var numOffices = officeService.findAll().size();
+                var numEmployees = employeeService.findAll().size();
                 var atm = atmService.create(
                         "atm"+(numAtm+1),
                         bank,
-                        officeService.getOfficeById(1L),
-                        employeeService.getEmployeeById(1L),
+                        officeService.findAll().get(numOffices-1),
+                        employeeService.findAll().get(numEmployees-1),
                         100.
                         );
                 atmService.addBankAtm(atm);
@@ -63,7 +65,7 @@ public class Main {
                 for(int numPay=0; numPay<2; numPay++){
                     var paymentAccount = paymentAccountService.create(
                             user,
-                            bank.getName()
+                            bank
                     );
                     paymentAccountService.addPaymentAccount(paymentAccount);
                     var credit = creditAccountService.create(
@@ -84,9 +86,20 @@ public class Main {
             }
             bankService.addBank(bank);
         }
+
         //Вывод информации по всем банкам
         for(var bank : bankService.findAll()){
-            bankService.outputBankInfo(bank.getId());
+            System.out.println(bank);
         }
+        //Взятие кредита на сумму 100000
+        try{
+            var user = userService.getUserById(1L);
+            var creditId = userService.getCredit(user.getId(), 100000);
+            userService.outputUserInfo(user.getId());
+        }catch (Exception e){
+            System.out.println("Failed");
+        }
+
+
     }
 }

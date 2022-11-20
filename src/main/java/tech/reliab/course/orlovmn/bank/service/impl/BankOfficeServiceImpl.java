@@ -2,6 +2,8 @@ package tech.reliab.course.orlovmn.bank.service.impl;
 
 import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
+import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
+import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 import tech.reliab.course.orlovmn.bank.service.BankOfficeService;
 
 import java.util.LinkedHashMap;
@@ -57,12 +59,24 @@ public class BankOfficeServiceImpl implements BankOfficeService {
     }
 
     @Override
-    public BankOffice getOfficeById(Long id){
-        return offices.get(id);
+    public BankOffice getOfficeById(Long id) throws IdException {
+        var office = offices.get(id);
+        if(office == null){
+            throw new IdException();
+        }
+        return office;
     }
 
     @Override
-    public void delOfficeById(Long id){
+    public void delOfficeById(Long id) throws DeletingNotExistentObjectException {
+        if(offices.get(id)==null){
+            throw new DeletingNotExistentObjectException();
+        }
         offices.remove(id);
+    }
+
+    @Override
+    public List<BankOffice> getAllOfficesByBankId(Long bankId) {
+        return findAll().stream().filter(office->office.getBank().getId().compareTo(bankId)==0).toList();
     }
 }

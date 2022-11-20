@@ -3,11 +3,13 @@ package tech.reliab.course.orlovmn.bank.entity;
 import tech.reliab.course.orlovmn.bank.entity.parentClasses.Person;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User extends Person {
     String job;
     double salary;
-    Bank bank;
+    List<Bank> banks = new ArrayList<>();
     double creditRating;
 
     public User() {}
@@ -17,7 +19,7 @@ public class User extends Person {
         super(id, firstName, lastName, birthDate);
         this.job = job;
         this.salary = salary;
-        this.bank = bank;
+        this.banks.add(bank);
         this.creditRating = creditRating;
     }
 
@@ -26,7 +28,7 @@ public class User extends Person {
         super(id, firstName, lastName, patronymic, birthDate);
         this.job = job;
         this.salary = salary;
-        this.bank = bank;
+        this.banks.add(bank);
         this.creditRating = creditRating;
     }
 
@@ -38,7 +40,7 @@ public class User extends Person {
         super.setBirthDate(user.getBirthDate());
         this.job = user.getJob();
         this.salary = user.getSalary();
-        this.bank = user.getBank();
+        this.banks = user.getBanks();
         this.creditRating = user.getCreditRating();
     }
 
@@ -58,12 +60,12 @@ public class User extends Person {
         this.salary = salary;
     }
 
-    public Bank getBank() {
-        return bank;
+    public List<Bank> getBanks() {
+        return banks;
     }
 
-    public void setBank(Bank bank) {
-        this.bank = bank;
+    public void addBank(Bank bank) {
+        this.banks.add(bank);
     }
 
     public double getCreditRating() {
@@ -82,7 +84,7 @@ public class User extends Person {
                 ", birthDate=" + super.getBirthDate() +
                 ", job='" + job + '\'' +
                 ", salary=" + salary +
-                ", bank_id=" + bank.getId() +
+                ", banks=" + banks.stream().map(Bank::getName).toList() +
                 ", creditRating=" + creditRating +
                 '}';
     }
