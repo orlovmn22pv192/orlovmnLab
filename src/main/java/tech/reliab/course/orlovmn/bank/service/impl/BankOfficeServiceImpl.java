@@ -1,12 +1,12 @@
 package tech.reliab.course.orlovmn.bank.service.impl;
 
 import tech.reliab.course.orlovmn.bank.entity.Bank;
+import tech.reliab.course.orlovmn.bank.entity.BankAtm;
 import tech.reliab.course.orlovmn.bank.entity.BankOffice;
 import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
-import tech.reliab.course.orlovmn.bank.exceptions.IdException;
+import tech.reliab.course.orlovmn.bank.exceptions.NegativeSumException;
 import tech.reliab.course.orlovmn.bank.service.BankOfficeService;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -26,7 +26,6 @@ public class BankOfficeServiceImpl implements BankOfficeService {
     }
 
     Long id = 0L;
-    private LinkedHashMap<Long, BankOffice> offices = new LinkedHashMap<Long, BankOffice>();
 
     @Override
     public BankOffice create(String name, Bank bank, String address, double rent){
@@ -37,46 +36,36 @@ public class BankOfficeServiceImpl implements BankOfficeService {
                 address,
                 true,
                 true,
-                bank.getNumberOfAtms(),
                 true,
                 true,
                 true,
                 bank.getMoneyAmount(),
                 rent
         );
-        bank.setNumberOfOffices(bank.getNumberOfOffices()+1);
+        bank.getOffices().add(bankOffice);
         return bankOffice;
     }
 
     @Override
-    public List<BankOffice> findAll(){
-        return offices.values().stream().toList();
+    public void addAtm(BankOffice office, BankAtm atm) {
+        office.getAtms().add(atm);
     }
 
     @Override
-    public void addOffice(BankOffice office){
-        offices.put(office.getId(), office);
-    }
-
-    @Override
-    public BankOffice getOfficeById(Long id) throws IdException {
-        var office = offices.get(id);
-        if(office == null){
-            throw new IdException();
-        }
-        return office;
-    }
-
-    @Override
-    public void delOfficeById(Long id) throws DeletingNotExistentObjectException {
-        if(offices.get(id)==null){
+    public void deleteAtm(BankOffice office, BankAtm atm) {
+        if(!office.getAtms().contains(atm)){
             throw new DeletingNotExistentObjectException();
         }
-        offices.remove(id);
+        office.getAtms().remove(atm);
     }
 
     @Override
-    public List<BankOffice> getAllOfficesByBankId(Long bankId) {
-        return findAll().stream().filter(office->office.getBank().getId().compareTo(bankId)==0).toList();
+    public List<BankAtm> getAtmsForLoans(BankOffice office, double sum) {
+        if(sum < 0){
+            throw new NegativeSumException();
+        }
+        return office.getAtms().stream().filter(
+                atm-> atm.isCanPaymentOfMoney() && atm.getMoneyAmount() > sum).toList();
     }
+
 }

@@ -1,7 +1,5 @@
 package tech.reliab.course.orlovmn.bank.service;
-import tech.reliab.course.orlovmn.bank.entity.Bank;
-import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
-import tech.reliab.course.orlovmn.bank.exceptions.IdException;
+import tech.reliab.course.orlovmn.bank.entity.*;
 
 import java.util.List;
 
@@ -14,33 +12,81 @@ public interface BankService {
     Bank create(String name);
 
     /**
-     *
-     * @return возвращает список всех банков
-     */
-    List<Bank> findAll();
-
-    /**
-     * добавляет банк в коллекцию
+     * выводит на экран информацию о банке с данным id
      * @param bank - банк
      */
-    void addBank(Bank bank);
+    void outputBankInfo(Bank bank);
+
+    /**
+     * Добавляет офис в банк
+     * @param bank - банк
+     * @param office - офис
+     */
+    void addOffice(Bank bank, BankOffice office);
+
+    /**
+     * Удаляет офис из банка
+     * @param bank - банк
+     * @param office - офис
+     */
+    void deleteOffice(Bank bank, BankOffice office);
+
+    /**
+     * Добавляет банкомат в банк
+     * @param bank - банк
+     * @param atm - банкомат
+     */
+    void addAtm(Bank bank, BankAtm atm);
+
+    /**
+     * Удаляет офис из банка
+     * @param bank - банк
+     * @param atm - банкомат
+     */
+    void deleteAtm(Bank bank, BankAtm atm);
+
+    /**
+     * Добавляет сотрудника в банк
+     * @param bank - банк
+     * @param employee - сотрудник
+     */
+    void addEmployee(Bank bank, Employee employee);
+
+    /**
+     * Удаляет сотрудника из банка
+     * @param bank - банк
+     * @param employee - сотрудник
+     */
+    void deleteEmployee(Bank bank, Employee employee);
+
+    /**
+     * Добавляет пользователя в банк
+     * @param bank - банк
+     * @param user - пользователь
+     */
+    void addUser(Bank bank, User user);
+
+    /**
+     * Удаляет пользователя из банка
+     * @param bank - банк
+     * @param user - пользователь
+     */
+    void deleteUser(Bank bank, User user);
+
+    /**
+     * Возвращает офисы, которые могут выдать кредит на данную сумму
+     * @param bank - банк
+     * @param sum - сумма кридита
+     */
+    List<BankOffice> getOfficesForLoans(Bank bank, double sum);
 
     /**
      *
-     * @param id - id банка
-     * @return возвращает банк с данным id или null
+     * @param bank - банк
+     * @param office - офис
+     * @return Возврашает сотрудников банка из данного офиса, которые могут выдать кредит
      */
-    Bank getBankById(Long id) throws IdException;
+    List<Employee> getEmployeesForLoans(Bank bank, BankOffice office);
 
-    /**
-     * удаляет банк по id
-     * @param id - id банка
-     */
-    void delBankById(Long id) throws DeletingNotExistentObjectException;
-
-    /**
-     * выводит на экран информацию о банке с данным id
-     * @param id - id банка
-     */
-    void outputBankInfo(Long id);
+    void getCredit(List<Bank> banks, User user);
 }

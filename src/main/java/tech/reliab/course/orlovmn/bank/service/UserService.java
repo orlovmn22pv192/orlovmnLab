@@ -2,11 +2,8 @@ package tech.reliab.course.orlovmn.bank.service;
 
 import tech.reliab.course.orlovmn.bank.entity.Bank;
 import tech.reliab.course.orlovmn.bank.entity.User;
-import tech.reliab.course.orlovmn.bank.exceptions.*;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.List;
 
 public interface UserService {
     /**
@@ -15,10 +12,9 @@ public interface UserService {
      * @param lastName - фамилия
      * @param birthDate - дата рождения клиента
      * @param job - место работы
-     * @param bank - банк
      * @return - возвращает созданный объект клиент
      */
-    User create(String firstName, String lastName, LocalDate birthDate, String job, Bank bank);
+    User create(String firstName, String lastName, LocalDate birthDate, String job);
     /**
      *
      * @param firstName - имя
@@ -26,47 +22,30 @@ public interface UserService {
      * @param patronymic - отчество
      * @param birthDate - дата рождения клиента
      * @param job - место работы
-     * @param bank - банк
      * @return - возвращает созданный объект клиент
      */
-    User create(String firstName, String lastName, String patronymic, LocalDate birthDate, String job, Bank bank);
-
-    /**
-     *
-     * @return возвращает список пользователей
-     */
-    List<User> findAll();
-
-    /**
-     * добавляет пользователя в коллекцию
-     * @param user - пользователь
-     */
-    void addUser(User user);
-
-    /**
-     *
-     * @param id - id пользователя
-     * @return возвращает пользователя с данным id
-     */
-    User getUserById(Long id) throws IdException;
-
-    /**
-     * удаляет пользователя с данным id
-     * @param id - id пользователя
-     */
-    void delUserById(Long id) throws DeletingNotExistentObjectException;
+    User create(String firstName, String lastName, String patronymic, LocalDate birthDate, String job);
 
     /**
      * выводит на экран информацию о пользователе
-     * @param id - id пользователя
+     * @param user - id пользователя
      */
-    void outputUserInfo(Long id);
+    void outputUserInfo(User user);
 
     /**
-     *
-     * @param userId - id пользователя
-     * @param sum - сумма кредита
-     * @return - возвращает id кредитного счета, если кредит выдан, иначе возвращает null
+     * Добавляет банк в список банков, которыми пользуется клиент
+     * @param user - клиент
+     * @param bank - банк
      */
-    Long getCredit(Long userId, double sum) throws NotEnoughMoneyException, NegativeSumException, IdException, LendingTermsException;
+    void addBank(User user, Bank bank);
+
+    /**
+     * Удаляет банк из списка банков, которыми пользуется клиент
+     * @param user - клиент
+     * @param bank - банк
+     */
+    void deleteBank(User user, Bank bank);
+
+
+
 }

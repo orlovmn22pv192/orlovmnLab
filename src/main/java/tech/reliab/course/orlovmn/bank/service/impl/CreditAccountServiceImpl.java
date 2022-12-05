@@ -1,13 +1,9 @@
 package tech.reliab.course.orlovmn.bank.service.impl;
 
 import tech.reliab.course.orlovmn.bank.entity.*;
-import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
-import tech.reliab.course.orlovmn.bank.exceptions.IdException;
 import tech.reliab.course.orlovmn.bank.service.CreditAccountService;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  *  Singleton
@@ -24,7 +20,6 @@ public class CreditAccountServiceImpl implements CreditAccountService {
         return INSTANCE;
     }
     private Long id = 0L;
-    private LinkedHashMap<Long, CreditAccount> creditAccounts = new LinkedHashMap<Long, CreditAccount>();
 
 
     @Override
@@ -43,35 +38,8 @@ public class CreditAccountServiceImpl implements CreditAccountService {
                 employee,
                 paymentAccount
         );
+        user.getCreditAccounts().add(creditAccount);
         return creditAccount;
     }
-
-    @Override
-    public List<CreditAccount> findAll() {
-        return creditAccounts.values().stream().toList();
-    }
-
-    @Override
-    public void addCreditAccount(CreditAccount creditAccount) {
-        creditAccounts.put(creditAccount.getId(), creditAccount);
-    }
-
-    @Override
-    public CreditAccount getCreditAccountById(Long id) throws IdException {
-        var creditAccount = creditAccounts.get(id);
-        if(creditAccount == null){
-            throw new IdException();
-        }
-        return creditAccount;
-    }
-
-    @Override
-    public void delCreditAccountById(Long id) throws DeletingNotExistentObjectException {
-        if(creditAccounts.get(id) == null){
-            throw new DeletingNotExistentObjectException();
-        }
-        creditAccounts.remove(id);
-    }
-
 
 }

@@ -10,25 +10,25 @@ public class User extends Person {
     String job;
     double salary;
     List<Bank> banks = new ArrayList<>();
+    List<CreditAccount> creditAccounts = new ArrayList<>();
+    List<PaymentAccount> paymentAccounts = new ArrayList<>();
     double creditRating;
 
     public User() {}
 
     public User(Long id, String firstName, String lastName, LocalDate birthDate, String job,
-                double salary, Bank bank, double creditRating) {
+                double salary, double creditRating) {
         super(id, firstName, lastName, birthDate);
         this.job = job;
         this.salary = salary;
-        this.banks.add(bank);
         this.creditRating = creditRating;
     }
 
     public User(Long id, String firstName, String lastName, String patronymic, LocalDate birthDate, String job,
-                double salary, Bank bank, double creditRating) {
+                double salary, double creditRating) {
         super(id, firstName, lastName, patronymic, birthDate);
         this.job = job;
         this.salary = salary;
-        this.banks.add(bank);
         this.creditRating = creditRating;
     }
 
@@ -74,6 +74,26 @@ public class User extends Person {
 
     public void setCreditRating(double creditRating) {
         this.creditRating = creditRating;
+    }
+
+    public void setBanks(List<Bank> banks) {
+        this.banks = banks;
+    }
+
+    public List<CreditAccount> getCreditAccounts() {
+        return creditAccounts;
+    }
+
+    public void setCreditAccounts(List<CreditAccount> creditAccounts) {
+        this.creditAccounts = creditAccounts;
+    }
+
+    public List<PaymentAccount> getPaymentAccounts() {
+        return paymentAccounts;
+    }
+
+    public void setPaymentAccounts(List<PaymentAccount> paymentAccounts) {
+        this.paymentAccounts = paymentAccounts;
     }
 
     @Override

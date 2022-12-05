@@ -1,13 +1,17 @@
 package tech.reliab.course.orlovmn.bank.service.impl;
 
-import tech.reliab.course.orlovmn.bank.entity.Bank;
+import tech.reliab.course.orlovmn.bank.entity.*;
 import tech.reliab.course.orlovmn.bank.exceptions.DeletingNotExistentObjectException;
 import tech.reliab.course.orlovmn.bank.exceptions.IdException;
+import tech.reliab.course.orlovmn.bank.exceptions.LendingTermsException;
+import tech.reliab.course.orlovmn.bank.exceptions.NegativeSumException;
 import tech.reliab.course.orlovmn.bank.service.BankService;
+import tech.reliab.course.orlovmn.bank.utils.BankComparator;
 
-import java.util.LinkedHashMap;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  *  Singleton
@@ -27,7 +31,6 @@ public class BankServiceImpl implements BankService {
 
     private Long id = 0L;
     private static Random random = new Random();
-    private LinkedHashMap<Long, Bank> banks = new LinkedHashMap<Long, Bank>();
 
     @Override
     public Bank create(String name){
@@ -37,10 +40,6 @@ public class BankServiceImpl implements BankService {
         var bank = new Bank(
                 ++id,
                 name,
-                0,
-                0,
-                0,
-                0,
                 rating,
                 money,
                 rate
@@ -50,68 +49,158 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public List<Bank> findAll(){
-        return banks.values().stream().toList();
-    }
-
-    @Override
-    public void addBank(Bank bank){
-        banks.put(bank.getId(), bank);
-    }
-
-    @Override
-    public Bank getBankById(Long id) throws IdException {
-        var bank = banks.get(id);
-        if(bank == null){
-            throw new IdException();
+    public void outputBankInfo(Bank bank){
+        System.out.println("Bank:");
+        System.out.println("\t"+bank);
+        System.out.println("\tOffices:");
+        for(var office: bank.getOffices()){
+            System.out.println("\t\t"+office);
         }
-        return bank;
+        System.out.println("\tEmployees:");
+        for(var employee: bank.getEmployees()){
+            System.out.println("\t\t"+employee);
+        }
+        System.out.println("\tAtms:");
+        for(var atm: bank.getAtms()){
+            System.out.println("\t\t"+atm);
+        }
+        System.out.println("\tUsers:");
+        for(var user: bank.getUsers()){
+            UserServiceImpl.getInstance().outputUserInfo(user);
+        }
     }
 
     @Override
-    public void delBankById(Long id) throws DeletingNotExistentObjectException {
-        if(banks.get(id) == null){
+    public void addOffice(Bank bank, BankOffice office) {
+        bank.getOffices().add(office);
+    }
+
+    @Override
+    public void deleteOffice(Bank bank, BankOffice office){
+        if(!bank.getOffices().contains(office)){
             throw new DeletingNotExistentObjectException();
         }
-        banks.remove(id);
+        bank.getOffices().remove(office);
     }
 
     @Override
-    public void outputBankInfo(Long id){
-        if(banks.containsKey(id)){
-            System.out.println("Bank:");
-            try {
-                System.out.println("\t" + getBankById(id));
-            } catch (IdException e) {
-                throw new RuntimeException(e);
-            }
-            var offices = BankOfficeServiceImpl.getInstance().findAll().stream()
-                    .filter(office -> office.getBank().getId().compareTo(id) == 0).toList();
-            System.out.println("\tOfficese:");
-            for(var office : offices){
-                System.out.println("\t\t" + office);
-                var employees = EmployeeServiceImpl.getInstance().findAll().stream()
-                    .filter(employee -> employee.getBankOffice().getId()
-                    .compareTo(office.getId())==0).toList();
-                System.out.println("\t\tEmployees:");
-                for(var employee : employees){
-                    System.out.println("\t\t\t" + employee);
-                }
-            }
-            System.out.println("\tAtms:");
-            var atms = BankAtmServiceImpl.getInstance().findAll().stream()
-                    .filter(atm -> atm.getBank().getId().compareTo(id)==0).toList();
-            for(var atm : atms){
-                System.out.println("\t\t" + atm);
-            }
-            System.out.println("\tUsers:");
-            var users = UserServiceImpl.getInstance().findAll().stream()
-                    .filter(user -> user.getBanks().get(0).getId().compareTo(id)==0).toList();
-            for(var user : users){
-                UserServiceImpl.getInstance().outputUserInfo(user.getId());
-            }
-        }else {
-            System.out.println("Not found bank with id:" + id);
+    public void addAtm(Bank bank, BankAtm atm) {
+        bank.getAtms().add(atm);
+    }
+
+    @Override
+    public void deleteAtm(Bank bank, BankAtm atm) {
+        if(!bank.getAtms().contains(atm)){
+            throw new DeletingNotExistentObjectException();
         }
+        bank.getAtms().remove(atm);
+    }
+
+    @Override
+    public void addEmployee(Bank bank, Employee employee) {
+        bank.getEmployees().add(employee);
+    }
+
+    @Override
+    public void deleteEmployee(Bank bank, Employee employee) {
+        if(!bank.getEmployees().contains(employee)){
+            throw new DeletingNotExistentObjectException();
+        }
+        bank.getEmployees().remove(employee);
+    }
+
+    @Override
+    public void addUser(Bank bank, User user) {
+        bank.getUsers().add(user);
+    }
+
+    @Override
+    public void deleteUser(Bank bank, User user) {
+        if(!bank.getUsers().contains(user)){
+            throw new DeletingNotExistentObjectException();
+        }
+        bank.getUsers().remove(user);
+    }
+
+    @Override
+    public List<BankOffice> getOfficesForLoans(Bank bank, double sum) {
+        if(sum < 0){
+            throw new NegativeSumException();
+        }
+        return bank.getOffices().stream().filter(
+                office -> office.isCanApplyLoan() && office.getMoneyAmount() > sum && office.isWorking()).toList();
+    }
+
+    @Override
+    public List<Employee> getEmployeesForLoans(Bank bank, BankOffice office) {
+        if(!bank.getOffices().contains(office)){
+            throw new IdException();
+        }
+        return bank.getEmployees().stream().filter(
+                emp -> emp.getBankOffice().getId().compareTo(office.getId())==0 && emp.isCanApplyLoan()).toList();
+    }
+
+    @Override
+    public void getCredit(List<Bank> banks, User user) {
+        Scanner reader = new Scanner(System.in);
+        banks.sort(new BankComparator());
+        System.out.println("Input credit sum: ");
+        double sum = reader.nextDouble();
+        System.out.println("Banks:");
+        for(int i=0; i<banks.size(); i++){
+            System.out.println(String.format("index: %d  ",i)+banks.get(i));
+        }
+        System.out.println("Choose bank: ");
+        int indexOfBank = reader.nextInt();
+        Bank bank = banks.get(indexOfBank);
+        System.out.println("Offices:");
+        List<BankOffice> offices = BankServiceImpl.getInstance().getOfficesForLoans(bank, sum);
+        if(offices.isEmpty()){
+            System.out.println("Offices not found");
+            throw new LendingTermsException();
+        }
+        for(int i=0; i<bank.getOffices().size(); i++){
+            System.out.println(String.format("index: %d  ",i)+bank.getOffices().get(i));
+        }
+        System.out.println("Choose office: ");
+        int indexOfOffice = reader.nextInt();
+        BankOffice office = offices.get(indexOfOffice);
+        List<Employee> employees = BankServiceImpl.getInstance().getEmployeesForLoans(bank, office);
+        if(employees.isEmpty()){
+            System.out.println("Employees not found");
+            throw new LendingTermsException();
+        }
+        for(int i=0; i<employees.size(); i++){
+            System.out.println(String.format("index: %d  ",i)+employees.get(i));
+        }
+        System.out.println("Choose employee: ");
+        int indexOfEmployee = reader.nextInt();
+        Employee employee = employees.get(indexOfEmployee);
+        List<BankAtm> atms = BankOfficeServiceImpl.getInstance().getAtmsForLoans(office, sum);
+        if(atms.isEmpty()){
+            System.out.println("Atms not found");
+            throw new LendingTermsException();
+        }
+        if(!user.getBanks().contains(bank)){
+            BankServiceImpl.getInstance().addUser(bank, user);
+            PaymentAccount payment = PaymentAccountServiceImpl.getInstance().create(user,bank);
+        }
+        if(user.getCreditRating() < 5000 && bank.getRating() > 50){
+            throw new LendingTermsException();
+        }
+        int month = Math.toIntExact(Math.round(sum/ user.getSalary()));
+        CreditAccount creditAccount = CreditAccountServiceImpl.getInstance().create(
+                user,
+                bank,
+                LocalDate.now(),
+                LocalDate.now(),
+                month,
+                sum,
+                sum/12,
+                employee,
+                user.getPaymentAccounts().stream().filter(
+                        pay -> pay.getBank().getId().compareTo(bank.getId())==0).findFirst().get()
+        );
+        BankAtmServiceImpl.getInstance().withdrawMoney(atms.get(0), sum);
     }
 }
