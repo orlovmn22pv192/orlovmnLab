@@ -82,7 +82,7 @@ public class Main {
             }
             bankList.add(bank);
         }
-        
+
 
         try{
             bankService.exportBankAccounts(bankList.get(0), "./test.txt");
